@@ -1,0 +1,37 @@
+# MedBoard 多厂商 LLM 配置。API key 不要写在这里，放 .env（见 .example.env）。
+# base_url 均为 OpenAI 兼容协议端点，切换厂商只改本文件。
+
+providers:
+  deepseek:
+    base_url: https://api.deepseek.com
+    api_key_env: DEEPSEEK_API_KEY
+    model: deepseek-chat
+    json_mode: true            # 支持 response_format=json_object
+
+  qwen:
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY
+    model: qwen-plus
+    json_mode: true
+
+  moonshot:
+    base_url: https://api.moonshot.cn/v1
+    api_key_env: MOONSHOT_API_KEY
+    model: moonshot-v1-32k
+    json_mode: true
+
+defaults:
+  temperature: 0.1
+  max_tokens: 4096
+  timeout_seconds: 120
+
+policy:
+  primary: deepseek
+  failover: [qwen, moonshot]
+  max_concurrency: 8           # 全局 LLM 并发上限（信号量，保护下游）
+  max_retries: 3               # 单次调用对 429/超时/断连的退避重试
+  structured_retries: 2        # 结构化输出校验失败后，带错误反馈重试
+  backoff_base: 1.5            # 指数退避基数（秒），叠加 jitter
+  backoff_cap: 30
+  circuit_failure_threshold: 3 # 连续失败 N 次熔断该 provider
+  circuit_cooldown_seconds: 60 # 熔断冷却（半开探测）
