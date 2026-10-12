@@ -2,7 +2,7 @@
 
 从零实现的循证医学多 Agent 会诊系统：分诊（难度自适应）→ 专家面板并行辩论 → 加权置信投票 → 主持人反馈与早停。机制参考 [MedAgents-2](https://github.com/MedAgentsBench/MedAgents-2) 论文思路，代码从零实现，工程增强（服务化 / 评测 / 工程化落地）。
 
-> 设计文档：`../MedAgents自研实现-模块划分与排期.md`（M1-M7 与排期）、`../MedAgents自研-工程化落地方案.md`（高并发 / 上下文管理 / 可观测）
+> 设计文档：`MedAgents自研实现-模块划分与排期.md`（M1-M8 与排期，**v3.1：2027 春招窗口版 + 双 harness 融合 + Vue 前端扩展，2026-12-01 → 2027-02-21**）、`../MedAgents自研-工程化落地方案.md`（高并发 / 上下文管理 / 可观测）
 
 ## 当前状态
 
@@ -13,6 +13,7 @@
 - [ ] M5 FastAPI + SSE / Gradio
 - [ ] M6 MedQA 评测 + Pareto
 - [ ] M7 工程化（Docker / CI / README）
+- [ ] M8 vLLM 自部署（config.yaml 加 provider 即接入）+ LiteLLM proxy 网关模式（不自建 SDK 封装，保留 M1 自研路由叙事）——**v3.0：可选 → 必做（W11-W12，节前 W10 预搭 GPU 环境）**
 
 ## 快速开始
 
